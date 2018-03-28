@@ -20,18 +20,7 @@ exports.list = (req, h) => {
       return Boom.badRequest("Missing one or more filter criteria");
     }
     var query = {};
-    query[filter] = value;
-    // var query = {};
-    // if (filter.toLowerCase() == "name") {
-    //   query["name"] = value;
-    // }
-    // else if (filter.toLowerCase() == "code") {
-    //   query["code"] = value;
-    // }
-    // else{
-    //   return Boom.badRequest("Invalid filter criteria");
-    // }
-
+    query[filter] = new RegExp(value, 'i');
     return Org.find(query).exec().then((orgs) => {
       return { organizations: orgs };
     }).catch((err) => {
